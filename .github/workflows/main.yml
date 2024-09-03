@@ -28,4 +28,4 @@ jobs:
         with:
           name: firmware
           path: |
-            build/lolin_c3_mini/firmware.bin
+            .pio/build/lolin_c3_mini/firmware.bin
