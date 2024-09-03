@@ -28,4 +28,4 @@ jobs:
         with:
           name: firmware
           path: |
-            .pio/build/lolin_c3_mini/firmware.bin
+            .pio/build/heltec_wifi_lora_32_V3/firmware.bin
