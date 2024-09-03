@@ -22,3 +22,10 @@ jobs:
 
       - name: Build ping_pong
         run: pio run
+        
+      - name: Upload binary as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware
+          path: |
+            build/lolin_c3_mini/firmware.bin
