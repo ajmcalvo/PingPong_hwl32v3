@@ -19,7 +19,9 @@ jobs:
           python-version: '3.11'
       - name: Install PlatformIO Core
         run: pip install --upgrade platformio
-
+      - name: Get path info
+        run: |
+          echo "$(ls -lah --group-directories-first)"
       - name: Build ping_pong
         run: pio run
         
