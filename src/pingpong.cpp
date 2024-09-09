@@ -6,6 +6,9 @@
 
    For full API reference, see the GitHub Pages
    https://jgromes.github.io/RadioLib/
+
+   Modified by: @amontero at Telegram
+                ajmcalvo at GitHub
 */
 
 // include the library
@@ -61,13 +64,12 @@ void setup() {
   radio.setOutputPower(1);
 
   // initialize SX1262 with default and configured settings
-  Serial.print(F("[SX1262] Initializing ... "));
+  log_d("[SX1262] Initializing ... ");
   int state = radio.begin();
   if (state == RADIOLIB_ERR_NONE) {
-    Serial.println(F("success!"));
+    log_d("\t\tInitialization success!");
   } else {
-    Serial.print(F("failed, code "));
-    Serial.println(state);
+    log_d("\t\tInitialization failed, code %d", state);
     while (true);
   }
 
@@ -77,18 +79,17 @@ void setup() {
 
   #if defined(INITIATING_NODE)
     // send the first packet on this node
-    Serial.print(F("[SX1262] Sending first packet ... "));
+    log_d("[SX1262] Sending first packet ... ");
     transmissionState = radio.startTransmit("Hello World!");
     transmitFlag = true;
   #else
     // start listening for LoRa packets on this node
-    Serial.print(F("[SX1262] Starting to listen ... "));
+    log_d("[SX1262] Starting to listen ... "));
     state = radio.startReceive();
     if (state == RADIOLIB_ERR_NONE) {
-      Serial.println(F("success!"));
+      log_d("\t\tReception success!");
     } else {
-      Serial.print(F("failed, code "));
-      Serial.println(state);
+      log_d("\t\tReception failed, code %d", state);
       while (true);
     }
   #endif
@@ -105,12 +106,10 @@ void loop() {
       // print the result
       if (transmissionState == RADIOLIB_ERR_NONE) {
         // packet was successfully sent
-        Serial.println(F("transmission finished!"));
+        log_d("\t\tTransmission finished!");
 
       } else {
-        Serial.print(F("failed, code "));
-        Serial.println(transmissionState);
-
+        log_d("\t\tTransmission failed, code %d", transmissionState);
       }
 
       // listen for response
@@ -125,21 +124,16 @@ void loop() {
 
       if (state == RADIOLIB_ERR_NONE) {
         // packet was successfully received
-        Serial.println(F("[SX1262] Received packet!"));
+        log_d("[SX1262] Received packet!");
 
         // print data of the packet
-        Serial.print(F("[SX1262] Data:\t\t"));
-        Serial.println(str);
+        log_d("[SX1262] Data:\t\t%s", str);
 
         // print RSSI (Received Signal Strength Indicator)
-        Serial.print(F("[SX1262] RSSI:\t\t"));
-        Serial.print(radio.getRSSI());
-        Serial.println(F(" dBm"));
+        log_d("[SX1262] RSSI:\t\t%.1f dBm",radio.getRSSI());
 
         // print SNR (Signal-to-Noise Ratio)
-        Serial.print(F("[SX1262] SNR:\t\t"));
-        Serial.print(radio.getSNR());
-        Serial.println(F(" dB"));
+        log_d("[SX1262] SNR:\t\t%.1f dB", radio.getSNR());
 
       }
 
@@ -147,7 +141,7 @@ void loop() {
       delay(1000);
 
       // send another one
-      Serial.print(F("[SX1262] Sending another packet ... "));
+      log_d("[SX1262] Sending another packet ... ");
       transmissionState = radio.startTransmit("Hello World!");
       transmitFlag = true;
     }
