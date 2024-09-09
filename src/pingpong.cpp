@@ -29,20 +29,7 @@
 #define LORA_NRST 12
 #define LORA_BUSY 13
 
-// SX1262 has the following default connections:
-// NSS pin:   10
-// DIO1 pin:  2
-// NRST pin:  3
-// BUSY pin:  9
-
 SX1262 radio = new Module(LORA_NSS, LORA_DIO1, LORA_NRST, LORA_BUSY);
-
-// or using RadioShield
-// https://github.com/jgromes/RadioShield
-//SX1262 radio = RadioShield.ModuleA;
-
-// or using CubeCell
-//SX1262 radio = new Module(RADIOLIB_BUILTIN_MODULE);
 
 // save transmission states between loops
 int transmissionState = RADIOLIB_ERR_NONE;
